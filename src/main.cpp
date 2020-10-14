@@ -66,17 +66,17 @@ int main() {
            *   Maybe use another PID controller to control the speed!
            */
           
-          // DEBUG
-          std::cout << "CTE: " << cte 
-                    << " Steering Value: " << steer_value 
-                    << " RMSE Value: " << pid.RMSE() 
-                    << std::endl;
-
-          json msgJson;
+          json msgJson, msgJson_out;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = 0.3;
+          
+          msgJson_out["counter"] = pid.Counter();
+          msgJson_out["error"] = cte;
+          msgJson_out["rmse"] = pid.RMSE();
+          
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          auto msg_out = msgJson_out.dump();
+          std::cout << msg_out << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }  // end "telemetry" if
       } else {

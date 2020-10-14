@@ -3,9 +3,6 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
-
-
-
 ## Parameter Optimisation
 
 Main challenge in PID controler implementaion is parameter tuning process. 
@@ -21,10 +18,23 @@ Set of optimal parameters achieved with the procedure is:
 - k(I): 0.001
 - k(D): 11.25
 
+## Effect of PID parameters
+
 I have also done initial quick trial-and-error experimentation with parameters which lead to very similar set of values.
 
 As expected increase in k(P) lead to over-shooting. Adding k(D) to the controlder removed overshooting and led to a much smoother convergence to the target trajectory. With just PD parameters set, car was able to drive pretty well, but constant correction towards the right was required to keep it in the middle of the road. Once `k(I)` was introduced to the model, car was moving straight in the middle of the road as would be expected.
 
+Plot bellow demonstrates how progressing from P controler to PD contrler, and eventually to PID controler improves the error over time:
+
+![Img 1](writeup/pid-implementation-errors.png)
+
+To demonstrate the benefit of the Integral component in the controler's feedback loop,
+it is worth focusing on the RMSE over time. Here I compare PD vs PID version:
+
+![Img 2](writeup/pid-implementation-bias-removal.png)
+
+
+`Img 1` and `Img 2` are created from `analysis-pid.R` file which uses error logs generated for different implementations of the controler and saved into `writeup/tracker_*.json` files.
 
 
 ## Dependencies

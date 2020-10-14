@@ -36,6 +36,8 @@ class PID {
    */
   double RMSE();
   
+  int Counter();
+  
  private:
   /**
    * PID Errors

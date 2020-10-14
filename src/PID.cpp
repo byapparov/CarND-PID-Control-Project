@@ -37,12 +37,12 @@ void PID::UpdateError(double cte) {
 
   squared_error += cte * cte; 
   
+  updates_counter += 1;
+  
   if (mode == 0) {
      // exit here as we are not optimising parameters
      return;
   }
-  
-  updates_counter += 1;
   
   std::cout << "Update counter: " << updates_counter << std::endl;
   if (updates_counter > 3000) {
@@ -96,10 +96,7 @@ void PID::UpdateError(double cte) {
  * Returns the total error
  */
 double PID::TotalError() {
-  std::cout << "Increment: " << increment_control << ", Kp: " << Kp
-            << ", Kd: " << Kd << ", Ki: " << Ki 
-            << "current rmse: " << rmse_prevous
-            << std::endl;
+
   double error =  -Kp * p_error - Kd * d_error - Ki * i_error;
   if (error > 1) {
      error = 1;
@@ -112,4 +109,8 @@ double PID::TotalError() {
 
 double PID::RMSE() {
    return sqrt(squared_error) / updates_counter;
+}
+
+int PID::Counter() {
+   return updates_counter;
 }
