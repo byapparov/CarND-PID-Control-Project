@@ -3,6 +3,30 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+
+
+
+## Parameter Optimisation
+
+Main challenge in PID controler implementaion is parameter tuning process. 
+
+I have used procedure that is similar to `Ttwiddle` as described in the [lecture](https://classroom.udacity.com/nanodegrees/nd013/parts/01a340a5-39b5-4202-9f89-d96de8cf17be/modules/1dc566d7-03d4-40da-af2c-b8ec85f2e4dd/lessons/48c5e9c4-f72b-4c7c-8375-ea4eda220e39/concepts/0abe5db7-d8b9-4796-9fb4-eb98614b1d3c). 
+
+Algorythm implemented in this project is self-adjusting every 3000 error updates by chaniging PID parameters
+one by one with increments that decrease by half with each cycle. 
+
+Set of optimal parameters achieved with the procedure is:
+
+- k(P): 0.53,
+- k(I): 0.001
+- k(D): 11.25
+
+I have also done initial quick trial-and-error experimentation with parameters which lead to very similar set of values.
+
+As expected increase in k(P) lead to over-shooting. Adding k(D) to the controlder removed overshooting and led to a much smoother convergence to the target trajectory. With just PD parameters set, car was able to drive pretty well, but constant correction towards the right was required to keep it in the middle of the road. Once `k(I)` was introduced to the model, car was moving straight in the middle of the road as would be expected.
+
+
+
 ## Dependencies
 
 * cmake >= 3.5

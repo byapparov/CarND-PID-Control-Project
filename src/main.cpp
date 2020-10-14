@@ -34,6 +34,7 @@ int main() {
   uWS::Hub h;
 
   PID pid;
+  pid.Init(0.53, 0.001, 11.25, 0);
   /**
    * TODO: Initialize the pid variable.
    */
@@ -56,7 +57,8 @@ int main() {
           double cte = std::stod(j[1]["cte"].get<string>());
           double speed = std::stod(j[1]["speed"].get<string>());
           double angle = std::stod(j[1]["steering_angle"].get<string>());
-          double steer_value;
+          pid.UpdateError(cte);
+          double steer_value = pid.TotalError();
           /**
            * TODO: Calculate steering value here, remember the steering value is
            *   [-1, 1].
@@ -65,7 +67,9 @@ int main() {
            */
           
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
+          std::cout << "CTE: " << cte 
+                    << " Steering Value: " << steer_value 
+                    << " RMSE Value: " << pid.RMSE() 
                     << std::endl;
 
           json msgJson;
